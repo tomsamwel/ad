@@ -1,4 +1,6 @@
-﻿namespace AD
+﻿using System;
+
+namespace AD
 {
     public class Opgave2
     {
@@ -7,7 +9,10 @@
         private static long FibonacciRecursiveInternal(int n)
         {
             calls++;
-            throw new System.NotImplementedException();
+            if (n < 0) throw new ArgumentException("Negative numbers are not allowed.");
+            
+            if (n <= 1) return n;
+            return n + FibonacciIterativeInternal(n - 1);
         }
 
         public static long FibonacciRecursive(int n)

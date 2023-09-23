@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AD
 {
@@ -7,7 +9,7 @@ namespace AD
 
         /// <summary>
         ///    Run over all characters in a string, push all '(' characters
-        ///    found on a stack. When ')' is found, it shoud match a '(' on
+        ///    found on a stack. When ')' is found, it should match a '(' on
         ///    the stack, which is then popped.
         ///
         ///    If ')' is found when no '(' is on the stack, this method will
@@ -18,7 +20,20 @@ namespace AD
         /// Returns False otherwise.</returns>
         public static bool CheckBrackets(string s)
         {
-            throw new System.NotImplementedException();
+            var stack = new MyStack<Char>();
+            foreach (char c in s)
+            {
+                if (c == '(')
+                {
+                    stack.Push(c);
+                }
+                else if (c == ')')
+                {
+                    if (stack.IsEmpty()) return false;
+                    stack.Pop();
+                }
+            }
+            return stack.IsEmpty();
         }
 
 
@@ -37,7 +52,29 @@ namespace AD
         /// Returns False otherwise.</returns>
         public static bool CheckBrackets2(string s)
         {
-            throw new System.NotImplementedException();
+            var stack = new MyStack<Char>();
+            var pairs= new Dictionary<char, char>
+            {
+                { '(', ')' },
+                { '[', ']' },
+                { '{', '}' }
+            };
+
+            foreach (char c in s)
+            {
+                if (pairs.ContainsKey(c))
+                {
+                    stack.Push(c);
+                }
+                else if (pairs.ContainsValue(c))
+                {
+                    if (stack.IsEmpty()) return false;
+                    if( pairs[stack.Top()] != c) return false;
+                    
+                    stack.Pop();
+                }
+            }
+            return stack.IsEmpty();
         }
 
     }

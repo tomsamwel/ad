@@ -5,22 +5,27 @@ namespace AD
         public MyLinkedList<T> list = new MyLinkedList<T>();
         public bool IsEmpty()
         {
-            throw new System.NotImplementedException();
+            return list.Size() == 0;
         }
 
         public T Pop()
         {
-            throw new System.NotImplementedException();
+            if (IsEmpty()) throw new MyStackEmptyException();
+            
+            T node = list.GetFirst();
+            list.RemoveFirst();
+            return node;
         }
 
         public void Push(T data)
         {
-            throw new System.NotImplementedException();
+            list.AddFirst(data);
         }
 
         public T Top()
         {
-            throw new System.NotImplementedException();
+            if (IsEmpty()) throw new MyStackEmptyException();
+            return list.GetFirst();
         }
     }
 }
