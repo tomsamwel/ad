@@ -12,7 +12,26 @@ namespace AD
 
         public void Sort(List<int> list, int lo, int hi)
         {
-            throw new System.NotImplementedException();
+            // Validate parameters
+            if (list.Count < 2 || lo < 0 || hi >= list.Count || lo > hi) return;
+
+            for (int i = lo + 1; i <= hi; i++)
+            {
+                int current = list[i];
+                
+                for (int j = i - 1; j >= lo; j--)
+                {
+                    int compare = list[j];
+
+                    if (current < compare)
+                    {
+                        list[j + 1] = compare;
+                        list[j] = current;
+                    }
+                    else break;
+                }
+                
+            }
         }
     }
 }

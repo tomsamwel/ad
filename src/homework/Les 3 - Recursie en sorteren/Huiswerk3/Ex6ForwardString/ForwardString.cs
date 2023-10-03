@@ -6,12 +6,14 @@ namespace AD
     {
         public static string ForwardString(List<int> list, int from_index)
         {
-            throw new System.NotImplementedException();
+            if (from_index >= list.Count) return "";
+            return list[from_index] + " " + ForwardString(list, ++from_index);
         }
         
         public static string BackwardString(List<int> list, int from_index)
         {
-            throw new System.NotImplementedException();
+            if (from_index >= list.Count) return "";
+            return BackwardString(list, from_index + 1) + " " + list[from_index];
         }
 
         public static void Run()

@@ -10,9 +10,8 @@ namespace AD
         {
             calls++;
             if (n < 0) throw new ArgumentException("Negative numbers are not allowed.");
-            
             if (n <= 1) return n;
-            return n + FibonacciIterativeInternal(n - 1);
+            return FibonacciRecursiveInternal(n - 1) + FibonacciRecursiveInternal(n - 2);
         }
 
         public static long FibonacciRecursive(int n)
@@ -23,7 +22,23 @@ namespace AD
 
         private static long FibonacciIterativeInternal(int n)
         {
-            throw new System.NotImplementedException();
+            if ( n < 0) throw new ArgumentException("Negative numbers are not allowed.");
+            
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+    
+            long result = 0;
+            long previous = 1;
+            long previousPrevious = 0;
+    
+            for (int i = 2; i <= n; i++)
+            {
+                calls++;
+                result = previous + previousPrevious;
+                previousPrevious = previous;
+                previous = result;
+            }
+            return result;
         }
 
         public static long FibonacciIterative(int n)
