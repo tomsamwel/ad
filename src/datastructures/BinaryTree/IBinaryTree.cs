@@ -1,27 +1,26 @@
-namespace AD
+namespace AD;
+
+public interface IBinaryTree<T>
 {
-    public partial interface IBinaryTree<T>
-    {
-        //----------------------------------------------------------------------
-        // Methods that have to be implemented for exam
-        //----------------------------------------------------------------------
-        BinaryNode<T> GetRoot();
-        int Size();
-        int Height();
+    //----------------------------------------------------------------------
+    // Methods that have to be implemented for exam
+    //----------------------------------------------------------------------
+    BinaryNode<T> GetRoot();
+    int Size();
+    int Height();
 
-        void MakeEmpty();
-        bool IsEmpty();
-        void Merge(T rootItem, BinaryTree<T> t1, BinaryTree<T> t2);
+    void MakeEmpty();
+    bool IsEmpty();
+    void Merge(T rootItem, BinaryTree<T> t1, BinaryTree<T> t2);
 
-        string ToPrefixString();
-        string ToInfixString();
-        string ToPostfixString();
+    string ToPrefixString();
+    string ToInfixString();
+    string ToPostfixString();
 
-        //----------------------------------------------------------------------
-        // Methods that have to be implemented for homework
-        //----------------------------------------------------------------------
-        int NumberOfLeaves();
-        int NumberOfNodesWithOneChild();
-        int NumberOfNodesWithTwoChildren();
-    }
+    //----------------------------------------------------------------------
+    // Methods that have to be implemented for homework
+    //----------------------------------------------------------------------
+    int NumberOfLeaves();
+    int NumberOfNodesWithOneChild();
+    int NumberOfNodesWithTwoChildren();
 }

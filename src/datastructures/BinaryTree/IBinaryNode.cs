@@ -1,12 +1,11 @@
-namespace AD
+namespace AD;
+
+public interface IBinaryNode<T>
 {
-    public partial interface IBinaryNode<T>
-    {
-        //----------------------------------------------------------------------
-        // Methods that have to be implemented for exam
-        //----------------------------------------------------------------------
-        T GetData();
-        BinaryNode<T> GetLeft();
-        BinaryNode<T> GetRight();
-    }
+    //----------------------------------------------------------------------
+    // Methods that have to be implemented for exam
+    //----------------------------------------------------------------------
+    T GetData();
+    BinaryNode<T> GetLeft();
+    BinaryNode<T> GetRight();
 }
