@@ -6,7 +6,7 @@ namespace AD
     public partial class PriorityQueue<T> : IPriorityQueue<T>
         where T : IComparable<T>
     {
-        public static int DEFAULT_CAPACITY = 100;
+        public const int DEFAULT_CAPACITY = 100;
         public int size;   // Number of elements in heap
         public T[] array;  // The heap array
 
