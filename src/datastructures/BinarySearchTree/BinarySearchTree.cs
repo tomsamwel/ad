@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace AD;
@@ -22,6 +23,18 @@ public class BinarySearchTree<T> : BinaryTree<T>, IBinarySearchTree<T>
     {
         root = Insert(root, x);
     }
+    
+    /// <summary>
+    /// Inserts a list of elements into the binary search tree.
+    /// </summary>
+    /// <param name="list">The list of elements to insert.</param>
+    public void BulkInsert(List<T> list)
+    {
+        foreach (var item in list)
+        {
+            Insert(item);
+        }
+    }
 
     /// <summary>
     ///     Finds the minimum element in the binary search tree.
@@ -31,6 +44,18 @@ public class BinarySearchTree<T> : BinaryTree<T>, IBinarySearchTree<T>
     {
         if (IsEmpty()) throw new BinarySearchTreeEmptyException();
         var (subject, parent) = FindMin(root, null);
+        return subject.GetData();
+    }
+
+
+    /// <summary>
+    /// Finds the second minimum element in the binary search tree.
+    /// </summary>
+    /// <returns>The second minimum element.</returns>
+    public T FindSecondMin()
+    {
+        if (IsEmpty()) throw new BinarySearchTreeEmptyException();
+        var (subject, parent) = FindSecondMin(root, null);
         return subject.GetData();
     }
 
@@ -95,7 +120,19 @@ public class BinarySearchTree<T> : BinaryTree<T>, IBinarySearchTree<T>
     {
         return node.HasLeft() ? FindMin(node.left, node) : (node, parent);
     }
+    
+    private (BinaryNode<T> subject, BinaryNode<T> parent) FindSecondMin(BinaryNode<T> node, BinaryNode<T> parent)
+    {
+        var (min, minParent) = FindMin(node, parent);
 
+        // If the minimum node has a right subtree, the second minimum is in that subtree
+        if (!min.HasRight()) return (minParent, parent);
+        var secondMin = FindMin(min.GetRight(), min);
+        return (secondMin.subject, secondMin.parent);
+        // If the minimum node has no right subtree, the second minimum is the parent of the minimum
+
+    }
+    
     private BinaryNode<T> RemoveMin(BinaryNode<T> node, BinaryNode<T> parent)
     {
         var current = node;
@@ -195,6 +232,12 @@ public class BinarySearchTree<T> : BinaryTree<T>, IBinarySearchTree<T>
         return InOrder();
     }
 
+    /// <summary>
+    /// Performs an in-order traversal of the tree and appends elements to the provided StringBuilder.
+    /// </summary>
+    /// <param name="node">The current node being processed.</param>
+    /// <param name="sb">The StringBuilder to which elements are appended.</param>
+    /// <returns>The StringBuilder containing the elements in in-order.</returns>
     private StringBuilder InOrder(BinaryNode<T> node, StringBuilder sb)
     {
         if (sb == null) sb = new StringBuilder();

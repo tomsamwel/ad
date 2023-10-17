@@ -14,6 +14,9 @@ public class PriorityQueue<T> : IPriorityQueue<T>
     private int _capacity = DEFAULT_CAPACITY;
     public T[] array; // The heap array
     public int size; // Number of elements in the heap
+    private delegate int CompareFunc(T a, T b);
+    private CompareFunc compare;
+
     
     public PriorityQueue() : this(DEFAULT_CAPACITY)
     {
@@ -23,8 +26,12 @@ public class PriorityQueue<T> : IPriorityQueue<T>
     /// Initializes a new instance of the PriorityQueue class with specified capacity.
     /// </summary>
     /// <param name="capacity">The initial capacity.</param>
-    private PriorityQueue(int capacity)
+    /// <param name="isMinHeap">Flag for either a minHeap or maxHeap</param>
+    public PriorityQueue(int capacity, bool isMinHeap = true)
     {
+        if (isMinHeap)compare = (a, b) => a.CompareTo(b);
+        else compare = (a, b) => b.CompareTo(a);
+        
         _capacity = capacity + 1;
 
         // Initialize the array
@@ -83,7 +90,7 @@ public class PriorityQueue<T> : IPriorityQueue<T>
     /// Adds an element to the priority queue without heapifying.
     /// </summary>
     /// <param name="x">Element to be added.</param>
-    public void AddFreely(T x)
+    public void AddFreely(T? x)
     {
         if (x == null) return;
         if (array.Length == size + 1) IncreaseSize();
@@ -137,7 +144,7 @@ public class PriorityQueue<T> : IPriorityQueue<T>
         var parent = array[parentIndex];
 
         // Compare the current value to its parent
-        var comparison = x.CompareTo(parent);
+        var comparison = compare(x, parent);
 
         // Parent is equal or greater than value, so don't do anything
         if (comparison >= 0) return;
@@ -164,8 +171,8 @@ public class PriorityQueue<T> : IPriorityQueue<T>
         {
             parentIndex = index / 2;
             parent = array[parentIndex];
-
-            if (x.CompareTo(parent) < 0)
+            var comparison = compare(x, parent);
+            if (comparison < 0)
             {
                 // If the current element is smaller than its parent, swap them
                 array[index] = parent;
@@ -211,15 +218,15 @@ public class PriorityQueue<T> : IPriorityQueue<T>
         if (leftChildIndex <= size)
         {
             var leftChild = array[leftChildIndex];
-            leftChildComparison = item.CompareTo(leftChild);
+            leftChildComparison = compare(item, leftChild);
             if (leftChildComparison > 0) smallerChildIndex = leftChildIndex;
 
             // If the item has a right child
             if (rightChildIndex <= size)
             {
                 var rightChild = array[rightChildIndex];
-                rightChildComparison = item.CompareTo(rightChild);
-                if (rightChildComparison > 0 && rightChild.CompareTo(leftChild) < 0)
+                rightChildComparison = compare(item, rightChild);
+                if (rightChildComparison > 0 && compare(rightChild, leftChild) < 0)
                     smallerChildIndex = rightChildIndex;
             }
         }
@@ -247,13 +254,13 @@ public class PriorityQueue<T> : IPriorityQueue<T>
             int smallerChildIndex;
 
             // Determine the index of the smaller child
-            if (rightChildIndex <= size && array[rightChildIndex].CompareTo(array[leftChildIndex]) < 0)
+            if (rightChildIndex <= size && compare(array[rightChildIndex], array[leftChildIndex]) < 0)
                 smallerChildIndex = rightChildIndex;
             else
                 smallerChildIndex = leftChildIndex;
 
             // Compare the current element with the smaller child
-            if (array[index].CompareTo(array[smallerChildIndex]) <= 0)
+            if (compare(array[index], array[smallerChildIndex]) <= 0)
                 // If the current element is smaller or equal to the smaller child, stop percolating down
                 break;
 
@@ -264,6 +271,42 @@ public class PriorityQueue<T> : IPriorityQueue<T>
             index = smallerChildIndex;
         }
     }
+    
+    /// <summary>
+    /// Checks if the PriorityQueue is a complete binary heap.
+    /// </summary>
+    /// <returns>True if complete, otherwise false.</returns>
+    public bool IsComplete()
+    {
+        // If the heap is empty or contains just one element, it's complete by definition.
+        if (size <= 1)
+        {
+            return true;
+        }
+
+        // Iterate over the array, checking completeness.
+        for (int i = 1; i <= size / 2; i++)
+        {
+            int leftChildIndex = 2 * i;
+            int rightChildIndex = 2 * i + 1;
+
+            // If a parent has no left child, it's incomplete.
+            if (array[leftChildIndex] == null)
+            {
+                return false;
+            }
+
+            // If there's a right child, but no corresponding left child, it's incomplete.
+            if (array[rightChildIndex] != null && array[leftChildIndex] == null)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
 
     /// <summary>
     /// Converts the priority queue to its string representation.

@@ -70,40 +70,22 @@ internal class Program
     {
         var pq = new PriorityQueue<int>();
 
-        Console.WriteLine("\n=====   Opgave 3 : BuildHeap   =====\n");
-        
-        int[] elements = new[] { 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
-        foreach (int element in elements)
+        Console.WriteLine("\n===== Opgave 3 : BuildHeap =====\n");
+
+        int[] elements = { 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+        foreach (var element in elements)
             pq.AddFreely(element);
-        
+
         Console.WriteLine(pq); // 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
         pq.BuildHeap();
         Console.WriteLine("After BuildHeap");
         Console.WriteLine(pq); // 1 2 6 3 10 8 7 4 12 11 19 9 15 18 14 5 13 17 20 16
     }
-    
 
-        static void Opgave3()
-        {
-            var pq = new PriorityQueue<int>();
-
-            System.Console.WriteLine("\n===== Opgave 3 : BuildHeap =====\n");
-
-            int[] elements = new[] { 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
-            foreach (int element in elements)
-                pq.AddFreely(element);
-
-            System.Console.WriteLine(pq); // 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
-            pq.BuildHeap();
-            System.Console.WriteLine("After BuildHeap");
-            System.Console.WriteLine(pq); // 1 2 6 3 10 8 7 4 12 11 19 9 15 18 14 5 13 17 20 16
-        }
-
-        static void Main(string[] args)
-        {
-            Opgave1();
-            Opgave2();
-            Opgave3();
-        }
+    private static void Main(string[] args)
+    {
+        Opgave1();
+        Opgave2();
+        Opgave3();
     }
 }

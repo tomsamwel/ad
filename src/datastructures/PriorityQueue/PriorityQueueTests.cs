@@ -478,5 +478,80 @@ namespace AD
             // Assert
             Assert.AreEqual(expected, actual);
         }
+        
+        [Test]
+        public void TestMaxHeapCreation()
+        {
+            var maxHeap = new PriorityQueue<int>(10, false);
+            Assert.AreEqual(0, maxHeap.Size());
+        }
+
+        [Test]
+        public void TestAddElementMaxHeap()
+        {
+            var maxHeap = new PriorityQueue<int>(10, false);
+            maxHeap.Add(1);
+            Assert.AreEqual(1, maxHeap.Size());
+        }
+
+        [Test]
+        public void TestRemoveMaxElement()
+        {
+            var maxHeap = new PriorityQueue<int>(10, false);
+            maxHeap.Add(5);
+            maxHeap.Add(1);
+            maxHeap.Add(9);
+            Assert.AreEqual(9, maxHeap.Remove());
+        }
+
+        [Test]
+        public void TestMaxHeapProperty()
+        {
+            var maxHeap = new PriorityQueue<int>(10, false);
+            maxHeap.Add(5);
+            maxHeap.Add(1);
+            maxHeap.Add(9);
+            maxHeap.Add(7);
+
+            Assert.AreEqual(9, maxHeap.Remove());
+            Assert.AreEqual(7, maxHeap.Remove());
+            Assert.AreEqual(5, maxHeap.Remove());
+            Assert.AreEqual(1, maxHeap.Remove());
+        }
+
+        [Test]
+        public void TestHeapEmptyException()
+        {
+            var maxHeap = new PriorityQueue<int>(10, false);
+            Assert.Throws<PriorityQueueEmptyException>(() => maxHeap.Remove());
+            
+        }
+        
+        [Test]
+        public void IsComplete_EmptyHeap_ReturnsTrue()
+        {
+            var pq = new PriorityQueue<int>();
+            Assert.IsTrue(pq.IsComplete());
+        }
+
+        [Test]
+        public void IsComplete_SingleElement_ReturnsTrue()
+        {
+            var pq = new PriorityQueue<int>();
+            pq.Add(1);
+            Assert.IsTrue(pq.IsComplete());
+        }
+
+        [Test]
+        public void IsComplete_CompleteHeap_ReturnsTrue()
+        {
+            var pq = new PriorityQueue<int>();
+            pq.Add(1);
+            pq.Add(2);
+            pq.Add(3);
+            Assert.IsTrue(pq.IsComplete());
+        }
+        
     }
+    
 }
