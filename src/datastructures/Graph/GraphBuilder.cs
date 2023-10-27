@@ -78,9 +78,9 @@ namespace AD
         {
             return new Graph();
         }
+        
 
-
-        public static IGraph CreateGraphFromBook14_1()
+        public static Graph CreateGraphFromBook14_1()
         {
             Graph graph = new Graph();
 
@@ -196,6 +196,57 @@ namespace AD
             return graph;
         }
 
+        public static Graph CreateGraphFromExam()
+        {
+            // Create a new graph
+            Graph graph = new Graph();
 
+            // Add vertices
+            graph.AddVertex("A");
+            graph.AddVertex("B");
+            graph.AddVertex("C");
+            graph.AddVertex("D");
+            graph.AddVertex("E");
+            graph.AddVertex("F");
+            graph.AddVertex("G");
+            graph.AddVertex("H");
+            graph.AddVertex("K");
+
+            // Add edges
+            graph.AddEdge("E", "C");
+            graph.AddEdge("C", "B");
+            graph.AddEdge("A", "B");
+            graph.AddEdge("A", "G");
+            graph.AddEdge("G", "F");
+            graph.AddEdge("G", "H");
+            graph.AddEdge("F", "F"); // Self-loop
+            graph.AddEdge("D", "F");
+            graph.AddEdge("D", "G");
+            graph.AddEdge("H", "E");
+            graph.AddEdge("H", "K");
+            graph.AddEdge("K", "G");
+            
+            return graph;
+        }
+        
+        // New method to create a graph with disconnected nodes
+        public static Graph CreateGraphWithDisconnectedNodes()
+        {
+            Graph graph = new Graph();
+            graph.AddVertex("A");
+            graph.AddVertex("B");
+            graph.AddEdge("A", "C", 1);
+            graph.AddEdge("C", "D", 2);
+            // Node E is disconnected
+            graph.AddVertex("E");
+            return graph;
+        }
+
+        public static Graph CreateGraphWithSingleVertex()
+        {
+            Graph graph = new Graph();
+            graph.AddVertex("A");
+            return graph;
+        }
     }
 }

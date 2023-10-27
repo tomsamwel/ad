@@ -466,5 +466,50 @@ namespace AD
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void Unweighted_01_OnUnweightedGraphFromExam()
+        {
+            // Create a new graph
+            Graph graph = DSBuilder.CreateGraphFromExam();
+            
+            const int expectedCount = 9; // A, B, C, D, E, F, G, H, K
+            Assert.AreEqual(expectedCount, graph.Count());
+            
+        }
+        
+        // New test for disconnected nodes
+        [Test]
+        public void TestGraphWithDisconnectedNodes()
+        {
+            IGraph graph = DSBuilder.CreateGraphWithDisconnectedNodes();
+            Assert.IsFalse(graph.IsConnected());
+        }
+        
+        // New test to check if an empty graph is indeed empty
+        [Test]
+        public void Graph_08_IsEmpty()
+        {
+            IGraph graph = DSBuilder.CreateGraphEmpty();
+            Assert.AreEqual(0, graph.Count());
+        }
+
+        // New test to check if a graph with only one vertex is connected
+        [Test]
+        public void Graph_09_IsConnected_SingleVertex()
+        {
+            IGraph graph = DSBuilder.CreateGraphWithSingleVertex();
+            Assert.IsTrue(graph.IsConnected());
+        }
+
+        // New test to check if removing a vertex updates the graph correctly
+        [Test]
+        public void Graph_10_RemoveVertex()
+        {
+            Graph graph = DSBuilder.CreateGraphFromBook14_1();
+            graph.RemoveVertex("V3");
+            Assert.IsFalse(graph.ContainsVertex("V3"));
+        }
+        
+
     }
 }

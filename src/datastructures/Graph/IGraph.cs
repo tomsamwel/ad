@@ -25,6 +25,8 @@ namespace AD
         // Methods that have to be implemented for homework
         //----------------------------------------------------------------------
         bool IsConnected();
+
+        int Count();
     }
 
 }

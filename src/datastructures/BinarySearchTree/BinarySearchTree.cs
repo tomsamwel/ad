@@ -125,12 +125,13 @@ public class BinarySearchTree<T> : BinaryTree<T>, IBinarySearchTree<T>
     {
         var (min, minParent) = FindMin(node, parent);
 
-        // If the minimum node has a right subtree, the second minimum is in that subtree
+
+        // If the minimum node has no right subtree, the second minimum is the parent of the minimum node
         if (!min.HasRight()) return (minParent, parent);
+        
+        // else it must be the minimum of the right subtree
         var secondMin = FindMin(min.GetRight(), min);
         return (secondMin.subject, secondMin.parent);
-        // If the minimum node has no right subtree, the second minimum is the parent of the minimum
-
     }
     
     private BinaryNode<T> RemoveMin(BinaryNode<T> node, BinaryNode<T> parent)
@@ -170,11 +171,18 @@ public class BinarySearchTree<T> : BinaryTree<T>, IBinarySearchTree<T>
 
         var countChildren = subject.CountChildren();
 
-        if (countChildren == 0)
-            RemoveNodeWithNoChildren(subject, parent);
-        else if (countChildren == 1)
-            RemoveNodeWithOneChild(subject, parent);
-        else if (countChildren == 2) RemoveNodeWithTwoChildren(subject);
+        switch (countChildren)
+        {
+            case 0:
+                RemoveNodeWithNoChildren(subject, parent);
+                break;
+            case 1:
+                RemoveNodeWithOneChild(subject, parent);
+                break;
+            case 2:
+                RemoveNodeWithTwoChildren(subject);
+                break;
+        }
 
         return node;
     }

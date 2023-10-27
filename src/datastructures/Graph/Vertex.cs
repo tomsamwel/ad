@@ -65,6 +65,18 @@ namespace AD
         {
             return known;
         }
+        
+        // Method to remove an adjacent vertex
+        public void RemoveAdjacent(Vertex dest)
+        {
+            // Step 1: Check if the destination vertex is actually adjacent
+            foreach (var edge in adj.Where(edge => edge.dest == dest))
+            {
+                // Step 2: Remove the adjacent vertex
+                adj.Remove(edge);
+                break;
+            }
+        }
 
         public void Reset()
         {

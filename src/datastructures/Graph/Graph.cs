@@ -53,6 +53,46 @@ namespace AD
             sourceVertex.CreateAdjacent(destVertex, cost);
         }
         
+        // Method to remove a vertex from the graph
+        public void RemoveVertex(string name)
+        {
+            if (vertexMap.ContainsKey(name))
+            {
+                vertexMap.Remove(name);
+            }
+        }
+        
+        // Method to remove an edge from the graph
+        public void RemoveEdge(string source, string dest)
+        {
+            // Step 1: Check if the source vertex exists
+            if (vertexMap.ContainsKey(source))
+            {
+                var sourceVertex = vertexMap[source];
+                
+                // Step 2: Check if the destination vertex exists
+                if (vertexMap.ContainsKey(dest))
+                {
+                    var destVertex = vertexMap[dest];
+                    
+                    // Step 3: Remove the edge
+                    sourceVertex.RemoveAdjacent(destVertex);
+                }
+            }
+        }
+
+        // Method to check if a vertex exists in the graph
+        public bool ContainsVertex(string name)
+        {
+            return vertexMap.ContainsKey(name);
+        }
+
+        // Method to get the count of vertices in the graph
+        public int VertexCount()
+        {
+            return vertexMap.Count;
+        }
+        
         /// <summary>
         ///    Clears all info within the vertices. This method will not remove any
         ///    vertices or edges.
@@ -63,11 +103,12 @@ namespace AD
         }
 
         /// <summary>
-        ///    Performs the Breatch-First algorithm for unweighted graphs.
+        ///    Performs the Breath-First algorithm for unweighted graphs.
         /// </summary>
         /// <param name="name">The name of the starting vertex</param>
         public void Unweighted(string name)
         {
+            ClearAll();
             var vertex = GetVertex(name);
             var q = new Queue<Vertex>();
             vertex.distance = 0;
@@ -143,6 +184,10 @@ namespace AD
 
             return sb.ToString();
         }
+        public int Count()
+        {
+            return vertexMap.Count;
+        }
 
 
         /// <summary>
@@ -168,7 +213,12 @@ namespace AD
             // If all vertices have been visited, the graph is connected
             return visited.Count == vertexMap.Count;
         }
-
+        
+        /// <summary>
+        /// Depth First Search
+        /// </summary>
+        /// <param name="currentVertex"></param>
+        /// <param name="visited"></param>
         private void DFS(Vertex currentVertex, HashSet<Vertex> visited)
         {
             visited.Add(currentVertex);
@@ -182,6 +232,11 @@ namespace AD
             }
         }
         
+        /// <summary>
+        /// Breadth First Search
+        /// </summary>
+        /// <param name="startVertex"></param>
+        /// <param name="visited"></param>
         private void BFS(Vertex startVertex, HashSet<Vertex> visited)
         {
             var queue = new Queue<Vertex>();

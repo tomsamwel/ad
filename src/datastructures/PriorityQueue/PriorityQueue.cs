@@ -58,6 +58,7 @@ public class PriorityQueue<T> : IPriorityQueue<T>
     /// Adds an element to the PriorityQueue.
     /// </summary>
     /// <param name="x">The element to add.</param>
+    /// <exception cref="ArgumentNullException"></exception>
     public void Add(T x)
     {
         if (x == null) throw new ArgumentNullException();
